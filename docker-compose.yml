@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   api:
-    image: ghcr.io/Geeth-2024AA05618/cats-dogs-api:latest
+    image: ghcr.io/geeth-2024aa05618/cats-dogs-api:latest
     container_name: cats-dogs-api
     ports:
       - "8000:8000"
