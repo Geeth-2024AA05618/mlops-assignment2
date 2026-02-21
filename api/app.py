@@ -1,0 +1,39 @@
+import io
+import time
+import numpy as np
+import tensorflow as tf
+from fastapi import FastAPI, File, UploadFile
+from PIL import Image
+
+app = FastAPI()
+
+MODEL_PATH = "models/model.keras"
+model = tf.keras.models.load_model(MODEL_PATH)
+
+@app.get("/health")
+def health():
+    return {"status": "Model is running"}
+
+def preprocess_image(image: Image.Image):
+    image = image.resize((224, 224))
+    image = np.array(image) / 255.0
+    image = np.expand_dims(image, axis=0)
+    return image
+
+@app.post("/predict")
+async def predict(file: UploadFile = File(...)):
+    start_time = time.time()
+
+    image = Image.open(io.BytesIO(await file.read())).convert("RGB")
+    processed = preprocess_image(image)
+
+    prediction = model.predict(processed)[0][0]
+    label = "Dog" if prediction > 0.5 else "Cat"
+
+    latency = time.time() - start_time
+
+    return {
+        "prediction": label,
+        "confidence": float(prediction),
+        "latency_seconds": latency
+    }
