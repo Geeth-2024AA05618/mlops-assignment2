@@ -13,3 +13,13 @@ data/raw/*
 
 # Ignore models (we will version via DVC later)
 models/*
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Generated plots
+*.png
+
+# Processed data
+data/processed/
