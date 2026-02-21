@@ -27,6 +27,10 @@ def preprocess_image(image: Image.Image):
     image = np.expand_dims(image, axis=0)
     return image
 
+def predict_from_array(model, image_array):
+    prediction = model.predict(image_array)[0][0]
+    return float(prediction)
+
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     model = get_model()
@@ -35,7 +39,7 @@ async def predict(file: UploadFile = File(...)):
     image = Image.open(io.BytesIO(await file.read())).convert("RGB")
     processed = preprocess_image(image)
 
-    prediction = model.predict(processed)[0][0]
+    prediction = predict_from_array(model, processed)
     label = "Dog" if prediction > 0.5 else "Cat"
 
     latency = time.time() - start_time

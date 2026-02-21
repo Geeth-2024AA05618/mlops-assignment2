@@ -12,7 +12,7 @@ DATA_DIR = "data/processed"
 MODEL_DIR = "models"
 BATCH_SIZE = 32
 IMG_SIZE = (224, 224)
-EPOCHS = 2
+EPOCHS = 5
 
 mlflow.set_tracking_uri("file:./mlruns")
 mlflow.set_experiment("Cats_vs_Dogs")
@@ -61,6 +61,8 @@ def load_data():
 def build_model():
     model = tf.keras.Sequential([
         tf.keras.layers.Rescaling(1./255, input_shape=(224, 224, 3)),
+        tf.keras.layers.RandomFlip("horizontal"),
+        tf.keras.layers.RandomRotation(0.1),
         tf.keras.layers.Conv2D(32, 3, activation="relu"),
         tf.keras.layers.MaxPooling2D(),
         tf.keras.layers.Conv2D(64, 3, activation="relu"),

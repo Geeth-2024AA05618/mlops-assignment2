@@ -30,6 +30,9 @@ jobs:
           python -c "import tensorflow"
           python -c "import numpy"
 
+      - name: Run Tests
+        run: pytest
+
       - name: Build Docker Image
         run: |
           docker build -t cats-dogs-api .
