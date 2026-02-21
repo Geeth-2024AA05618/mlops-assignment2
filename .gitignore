@@ -1,0 +1,15 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# DVC cache
+.dvc/cache/
+
+# Ignore raw data (DVC will track it)
+data/raw/*
+
+# Ignore models (we will version via DVC later)
+models/*
