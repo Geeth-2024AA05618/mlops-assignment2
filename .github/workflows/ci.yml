@@ -37,6 +37,6 @@ jobs:
       - name: Run Container (Smoke Test)
         run: |
           docker run -d -p 8000:8000 --name test-container cats-dogs-api
-          sleep 10
+          sleep 30
           curl http://localhost:8000/health
           docker stop test-container
