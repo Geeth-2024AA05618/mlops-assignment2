@@ -8,7 +8,14 @@ from PIL import Image
 app = FastAPI()
 
 MODEL_PATH = "models/model.keras"
-model = tf.keras.models.load_model(MODEL_PATH)
+model = None
+
+def get_model():
+    global model
+    if model is None:
+        model = tf.keras.models.load_model(MODEL_PATH)
+    return model
+
 
 @app.get("/health")
 def health():
@@ -22,6 +29,7 @@ def preprocess_image(image: Image.Image):
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
+    model = get_model()
     start_time = time.time()
 
     image = Image.open(io.BytesIO(await file.read())).convert("RGB")
