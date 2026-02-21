@@ -37,6 +37,16 @@ jobs:
       - name: Run Container (Smoke Test)
         run: |
           docker run -d -p 8000:8000 --name test-container cats-dogs-api
-          sleep 30
-          curl http://localhost:8000/health
+
+          echo "Waiting for container to be ready..."
+
+          for i in {1..30}; do
+            if curl -s http://localhost:8000/health; then
+              echo "Container is ready!"
+              break
+            fi
+            echo "Still waiting..."
+            sleep 5
+          done
+
           docker stop test-container
