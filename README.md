@@ -154,3 +154,18 @@ Docker
 GitHub Actions
 
 Pytest
+
+
+## To Run in local
+1. Setup Env
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+
+2. Pull data - dvc pull
+
+3. Train model - python src/train.py
+
+4. Start API - uvicorn api.app:app --reload
+
+5. Test API - http://localhost:8000/health
