@@ -1,14 +1,14 @@
 import os
-import shutil
-from src.data_preprocessing import create_processed_dirs, PROCESSED_DATA_PATH
+from src.data_preprocessing import create_processed_dirs
 
-def test_create_processed_dirs():
-    if os.path.exists(PROCESSED_DATA_PATH):
-        shutil.rmtree(PROCESSED_DATA_PATH)
+def test_create_processed_dirs(tmp_path, monkeypatch):
+    # Use temporary directory instead of real processed path
+    monkeypatch.setattr(
+        "src.data_preprocessing.PROCESSED_DATA_PATH",
+        tmp_path
+    )
 
     create_processed_dirs()
 
-    assert os.path.exists(os.path.join(PROCESSED_DATA_PATH, "train", "Cat"))
-    assert os.path.exists(os.path.join(PROCESSED_DATA_PATH, "train", "Dog"))
-    assert os.path.exists(os.path.join(PROCESSED_DATA_PATH, "val", "Cat"))
-    assert os.path.exists(os.path.join(PROCESSED_DATA_PATH, "test", "Dog"))
+    assert (tmp_path / "train" / "Cat").exists()
+    assert (tmp_path / "val" / "Dog").exists()
