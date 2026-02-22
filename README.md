@@ -1,4 +1,12 @@
 ### Cats vs Dogs Classification – End-to-End MLOps Pipeline
+
+## Team members
+- Geeth Priya S - 2025AA05618
+- PRASAD UDAY JAWADEKAR - 2024AA05482
+- Vijaya Rajesh J - 2024AB05086
+- Rajender Kumar - 2024AA05173
+- Satrasala Nagakishor - 2024ab05163
+
 ## Project Overview
 
 This project implements a complete MLOps lifecycle for a Cats vs Dogs image classification model.
